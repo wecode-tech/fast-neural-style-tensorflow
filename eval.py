@@ -12,6 +12,7 @@ tf.app.flags.DEFINE_string('loss_model', 'vgg_16', 'The name of the architecture
 tf.app.flags.DEFINE_integer('image_size', 256, 'Image size to train.')
 tf.app.flags.DEFINE_string("model_file", "models.ckpt", "")
 tf.app.flags.DEFINE_string("image_file", "a.jpg", "")
+tf.app.flags.DEFINE_string("result_name", "res.jpg", "")
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -57,9 +58,9 @@ def main(_):
             saver.restore(sess, FLAGS.model_file)
 
             # Make sure 'generated' directory exists.
-            generated_file = 'generated/res.jpg'
-            if os.path.exists('generated') is False:
-                os.makedirs('generated')
+            generated_file = 'imgs/' + FLAGS.result_name
+            if os.path.exists('imgs') is False:
+                os.makedirs('imgs')
 
             # Generate and write image data to file.
             with open(generated_file, 'wb') as img:
@@ -72,5 +73,5 @@ def main(_):
 
 
 if __name__ == '__main__':
-    tf.logging.set_verbosity(tf.logging.INFO)
+    tf.logging.set_verbosity(tf.logging.ERROR)
     tf.app.run()
